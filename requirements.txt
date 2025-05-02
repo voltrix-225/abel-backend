@@ -3,5 +3,4 @@ flask
 flask-cors
 requests
 pandas
-matplotlib
 gunicorn
