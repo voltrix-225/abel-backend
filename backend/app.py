@@ -23,13 +23,17 @@ def generate_lyrics():
     if not prompt:
         return jsonify({"error" : "Enter a prompt"}), 400
     
-
-    seed_txt = "Verse: \n" + prompt
-    seed_ids = torch.tensor([encode(seed_txt)], dtype = torch.long)
-    output = model.generate(seed_ids, max_new_tokens=1200)
-    lyrics = decode(output[0].tolist())
-
-    return jsonify({"lyrics" : lyrics}) 
+    try:
+        seed_txt = "Verse: \n" + prompt
+        seed_ids = torch.tensor([encode(seed_txt)], dtype = torch.long)
+        output = model.generate(seed_ids, max_new_tokens=1200)
+        lyrics = decode(output[0].tolist())
+        
+        return jsonify({"lyrics" : lyrics}) 
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+        
 
 if __name__ == '__main__':
     app.run(debug = True, host="0.0.0.0", port=10000)
