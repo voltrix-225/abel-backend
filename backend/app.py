@@ -13,7 +13,7 @@ model.to('cpu')
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return "API IS LIVE"
 
 @app.route('/generate', methods = ['POST'])
 def generate_lyrics():
@@ -32,4 +32,4 @@ def generate_lyrics():
     return jsonify({"lyrics" : lyrics}) 
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, host="0.0.0.0", port=10000)
