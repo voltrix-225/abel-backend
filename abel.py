@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-from matplotlib import pyplot as plt
-import time
 import pandas as pd
 
 
@@ -244,18 +242,16 @@ if __name__ == "__main__":
 
 
 
-    tloss, vloss = [],[]
     #training loop
     for iter in range(max_iters):
 
-        print(f"\r Iteration No.: {iter} --> ", end = '', flush= True)
+
 
         #every once in a while, eval the loss on train and val sets
         if iter % eval_interval == 0:
             losses = estimate_loss()
             print(f"step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
-            tloss.append(losses['train'])
-            vloss.append(losses['val'])
+
 
         #sample a batch of data
         xb, yb = get_batch('train')
@@ -270,22 +266,4 @@ if __name__ == "__main__":
 
     model_sve = torch.save(model.state_dict(), 'ABEL_.pth')
 
-    print("\n\n")
-
-    context = torch.zeros((1,1), dtype = torch.long, device = device)
-    print(decode(m.generate(context, max_new_tokens= 1000)[0].tolist())) #[0] extracts the first batch, which is then converted in readable txt
-
-    end_time = time.time()
-    elasped_time = (end_time - start_time)/3600
-    print(f"\n\nProgram Run Time : {elasped_time:.4f}")
-
-    plt.xlabel('Training loss')
-    plt.ylabel('Validation loss')
-    plt.title('Training Loss V/S Validation Loss')
-
-    plt.plot(tloss)
-    plt.plot(vloss)
-
-
-    plt.show()
 
