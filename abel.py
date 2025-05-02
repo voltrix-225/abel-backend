@@ -32,7 +32,7 @@ torch.manual_seed(1337)
 
 
 
-df = pd.read_csv("spotify_millsongdata.csv")
+df = pd.read_csv("hf://datasets/vishnupriyavr/spotify-million-song-dataset/spotify_millsongdata.csv")
 text = df['text']
 #here are the unique chars that are in the text
 text = '\n'.join(text)
